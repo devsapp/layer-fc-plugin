@@ -1,0 +1,33 @@
+{
+  "name": "start-component",
+  "version": "0.0.1",
+  "description": "This is a component demo for Serverless Devs Tool ",
+  "autoInstall": false,
+  "homepage": "https://www.serverless-devs.com",
+  "author": "Serverless-Devs",
+  "contributors": [],
+  "license": "MIT",
+  "main": "./src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "Serverless",
+    "Framework",
+    "Serverless-Devs",
+    "Serverless-Tool",
+    "Function Compute"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "@serverless-devs/core": "^0.1.32"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "jest": {
+    "collectCoverage": true
+  }
+}
