@@ -19,23 +19,24 @@ name: hello-world-app
 # access 是当前应用所需要的密钥信息配置：
 # 密钥配置可以参考：https://www.serverless-devs.com/serverless-devs/command/config
 # 密钥使用顺序可以参考：https://www.serverless-devs.com/serverless-devs/tool#密钥使用顺序与规范
-access: sub
+access: wll
 
 vars: # 全局变量
   region: cn-hangzhou
   service:
-    name: hello-world-service
+    name: wll-hello-world-service
     description: "hello world by serverless devs"
 
 services:
   helloworld: # 业务名称/模块名称
     component: fc
     actions:
-      post-deploy: # 在deploy之后运行
-        - plugin: ${path(..)}
+      pre-deploy: # 在deploy之后运行
+        - plugin: ${path(..)} 
+        # /Users/wanglei/workplace/2021/serverless/layer-fc/src/index.js
           args:
             codeUri: ./layer
-            name: egg-module # 自定义名称
+            name: lodash # 自定义名称
             update: true # 是否需要更新层，默认每次部署，不会重新更新层里面代码
             runtime:
               - nodejs12
@@ -44,13 +45,15 @@ services:
       region: ${vars.region} # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
       service: ${vars.service}
       function:
-        name: start-fc-http-nodejs14
+        name: wll-fc-http-nodejs14
         description: "hello world by serverless devs"
         runtime: nodejs14
         codeUri: ./code
         handler: index.handler
         memorySize: 128
         timeout: 60
+        environmentVariables:
+          NODE_PATH: /opt/node_modules:/opt/nodejs/node_modules
       triggers:
         - name: httpTrigger
           type: http

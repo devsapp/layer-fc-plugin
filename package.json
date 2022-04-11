@@ -22,7 +22,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@serverless-devs/core": "^0.1.32"
+    "@serverless-devs/core": "^0.1.32",
+    "tty-table": "^4.1.5"
   },
   "devDependencies": {
     "jest": "^27.5.1"
