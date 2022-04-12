@@ -1,10 +1,10 @@
 Type: Plugin
-Name: website-fc
+Name: layer-fc
 Provider:
   - 阿里云
-Version: 0.0.5
-Description: 使用fc部署静态资源
-HomePage: https://github.com/devsapp/website-fc
+Version: 0.0.1
+Description: 快速部署layer到函数计算FC上
+HomePage: https://github.com/devsapp/layer-fc
 Tags: #标签详情
   - Serverless Devs
   - 核心模块
