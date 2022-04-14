@@ -1,7 +1,5 @@
 const core = require('@serverless-devs/core');
-const path = require('path');
-const { lodash, fse, rimraf, Logger } = core;
-const logger = new Logger('layer-fc');
+const { lodash, Logger } = core;
 const Client = require('./lib/client');
 const Layer = require('./lib/layer');
 /**

@@ -2,9 +2,9 @@ Type: Plugin
 Name: layer-fc
 Provider:
   - 阿里云
-Version: 0.0.5
+Version: 0.0.2
 Description: 使用fc部署静态资源
-HomePage: https://github.com/devsapp/website-fc
+HomePage: https://github.com/devsapp/layer-fc
 Tags: #标签详情
   - Serverless Devs
   - 核心模块

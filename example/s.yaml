@@ -33,7 +33,6 @@ services:
     actions:
       pre-deploy: # 在deploy之后运行
         - plugin: ${path(..)} 
-        # /Users/wanglei/workplace/2021/serverless/layer-fc/src/index.js
           args:
             codeUri: ./layer
             name: lodash2 # 自定义名称
