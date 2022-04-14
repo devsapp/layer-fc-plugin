@@ -36,7 +36,6 @@ services:
           args:
             codeUri: ./layer
             name: layername # 自定义名称
-            update: true # 是否需要更新层，默认每次部署，不会重新更新层里面代码
             runtime:
               - nodejs12
               - nodejs10
@@ -86,7 +85,6 @@ services:
           args:
               codeUri: ./layer
               name: layername # 自定义名称
-              update: true # 是否需要更新层，默认每次部署，不会重新更新层里面代码
               runtime:
                 - nodejs12
                 - nodejs10

@@ -10,7 +10,7 @@ const logger = new Logger('layer-fc');
 module.exports = async function index(inputs, args) {
   logger.debug(`inputs params: ${JSON.stringify(inputs)}`);
   logger.debug(`args params: ${JSON.stringify(args)}`);
-  const { codeUri, name, update = false, runtime, description } = args;
+  const { codeUri, name, runtime, description } = args;
   /**
    * handleInputs
    * props
@@ -27,17 +27,11 @@ module.exports = async function index(inputs, args) {
       description,
     },
   });
-  let publishRes = '';
+
   // handlelayer
   const layer = await loadComponent('devsapp/fc-layer');
-  const result = await layer.list(_inputs);
-  const isExiting = lodash.includes(
-    lodash.map(result, (item) => item.layerName),
-    name
-  );
-  if (update || !isExiting) {
-    publishRes = await layer.publish(_inputs);
-  }
+  const publishRes = await layer.publish(_inputs);
+
   /**
    * output inputs
    * environmentVariables  key NODE_PATH

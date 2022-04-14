@@ -36,7 +36,6 @@ services:
           args:
             codeUri: ./layer
             name: lodash4 # 自定义名称
-            update: true # 是否需要更新层，默认每次部署，不会重新更新层里面代码
             runtime:
               - nodejs12
               - nodejs10
@@ -52,9 +51,9 @@ services:
         handler: index.handler
         memorySize: 128
         timeout: 60
-        environmentVariables:
-          NODE_PATH: 
-        layers:
+        # environmentVariables:
+        #   NODE_PATH: 
+        # layers:
       triggers:
         - name: httpTrigger
           type: http
