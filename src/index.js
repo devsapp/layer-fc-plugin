@@ -13,11 +13,23 @@ const Layer = require('./lib/layer');
 
 module.exports = async function index(inputs, args) {
   const { props = {}, credentials = {}, project = { access: '' } } = inputs;
-  // 生成client
+  // createclient
   await Client.setFcClient(props.region, credentials, project.access);
   const layer = new Layer();
-  // 显示layerlist
-  layer.list({}, true);
+  // handlelayer
+  const { codeUri, name, update = false, runtime } = args;
+  const result = await layer.list({ prefix: name });
+  const isExiting = lodash.includes(
+    lodash.map(result, (item) => item.layerName),
+    name
+  );
+  if (update || !isExiting) {
+    await layer.publish({
+      layerName: name,
+      code: codeUri,
+      compatibleRuntime: runtime,
+    });
+  }
   return lodash.merge(inputs, {
     props: {
       function: {

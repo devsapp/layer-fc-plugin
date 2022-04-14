@@ -1,4 +1,4 @@
-const Table = require('tty-table');
+// const Table = require('tty-table');
 
 const tableShow = (data) => {
   const options = {
@@ -26,7 +26,7 @@ const tableShow = (data) => {
     formatter: (v) => v,
   }));
 
-  console.log(Table(header, data, options).render());
+  // console.log(Table(header, data, options).render());
 };
 
 module.exports = {
