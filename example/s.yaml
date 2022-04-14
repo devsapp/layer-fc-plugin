@@ -24,7 +24,7 @@ access: wll
 vars: # 全局变量
   region: cn-hangzhou
   service:
-    name: wll-hello-world-service
+    name: layer-world-service
     description: "hello world by serverless devs"
 
 services:
@@ -35,16 +35,17 @@ services:
         - plugin: ${path(..)} 
           args:
             codeUri: ./layer
-            name: lodash2 # 自定义名称
+            name: lodash4 # 自定义名称
             update: true # 是否需要更新层，默认每次部署，不会重新更新层里面代码
             runtime:
               - nodejs12
               - nodejs10
+              - nodejs14
     props:
       region: ${vars.region} # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
       service: ${vars.service}
       function:
-        name: wll-fc-http-nodejs14
+        name: layer-fc-nodejs
         description: "hello world by serverless devs"
         runtime: nodejs14
         codeUri: ./code
@@ -52,7 +53,8 @@ services:
         memorySize: 128
         timeout: 60
         environmentVariables:
-          NODE_PATH: /opt/node_modules:/opt/nodejs/node_modules
+          NODE_PATH: 
+        layers:
       triggers:
         - name: httpTrigger
           type: http
