@@ -36,7 +36,7 @@ services:
         # /Users/wanglei/workplace/2021/serverless/layer-fc/src/index.js
           args:
             codeUri: ./layer
-            name: lodash # 自定义名称
+            name: lodash2 # 自定义名称
             update: true # 是否需要更新层，默认每次部署，不会重新更新层里面代码
             runtime:
               - nodejs12
