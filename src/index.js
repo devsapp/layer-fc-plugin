@@ -10,27 +10,39 @@ const logger = new Logger('layer-fc');
 module.exports = async function index(inputs, args) {
   logger.debug(`inputs params: ${JSON.stringify(inputs)}`);
   logger.debug(`args params: ${JSON.stringify(args)}`);
-  const { codeUri, name, runtime, description } = args;
+
+  const { codeUri, name, runtime, description, ossBucket, ossKey } = args;
   /**
    * handleInputs
    * props
-   * layerName: 必填
-   * code: 必填
-   * compatibleRuntime: 选填
-   * description: 选填
+   *  代码包上传
+   *    layerName: 必填
+   *    code: 必填
+   *    compatibleRuntime: 选填
+   *    description: 选填
+   *  oss上传
+   *    layerName
+   *    ossBucket 必填
+   *    ossKey 必填
+   * customRuntime
+   *   共享应用环境
+   *   layerName ${name}_fc_auto_created
    * **/
+  process.argv = process.argv.concat('--debug');
   let _inputs = lodash.merge(inputs, {
     props: {
       layerName: name,
       code: codeUri,
       compatibleRuntime: runtime,
       description,
+      ossBucket,
+      // ossKey,
     },
   });
-
-  // handlelayer
-  const layer = await loadComponent('devsapp/fc-layer');
+  // handlelayer devsapp/fc-layer@dev  devsapp/fc-layer
+  const layer = await loadComponent('devsapp/fc-layer@dev');
   const publishRes = await layer.publish(_inputs);
+  process.exit();
 
   /**
    * output inputs
@@ -44,12 +56,13 @@ module.exports = async function index(inputs, args) {
   );
   const inputNodePath = environmentVariables.NODE_PATH;
   const layerNodePath = '/opt/node_modules:/opt/nodejs/node_modules';
-  environmentVariables.NODE_PATH = inputNodePath
-    ? `${inputNodePath}:${layerNodePath}`
-    : layerNodePath;
+  if (!lodash.includes(inputNodePath, layerNodePath)) {
+    environmentVariables.NODE_PATH = inputNodePath
+      ? `${layerNodePath}:${inputNodePath}`
+      : layerNodePath;
+  }
   const layers = lodash.get(inputs, 'props.function.layers', []);
-
-  publishRes && layers.push(publishRes);
+  publishRes && layers.unshift(publishRes);
 
   _inputs = lodash.merge(_inputs, {
     props: {

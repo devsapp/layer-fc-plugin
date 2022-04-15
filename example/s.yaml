@@ -34,8 +34,25 @@ services:
       pre-deploy: # 在deploy之后运行
         - plugin: ${path(..)} 
           args:
+            name: momentlayerTestNodemodules # 自定义名称
+            runtime:
+              - nodejs12
+              - nodejs10
+              - nodejs14
+            ossBucket: cn-hangzhou-nodejs1on1
+            ossKey: testNodemodules.zip
+        - plugin: ${path(..)} 
+          args:
             codeUri: ./layer
-            name: lodash4 # 自定义名称
+            name: lodashlayer # 自定义名称
+            runtime:
+              - nodejs12
+              - nodejs10
+              - nodejs14
+        - plugin: ${path(..)} 
+          args:
+            codeUri: ./layer
+            name: testlayer # 自定义名称
             runtime:
               - nodejs12
               - nodejs10
@@ -51,9 +68,10 @@ services:
         handler: index.handler
         memorySize: 128
         timeout: 60
-        # environmentVariables:
-        #   NODE_PATH: 
-        # layers:
+        environmentVariables:
+          NODE_PATH: /opt/test/node_modules
+        layers:
+          - ddea885d86e0732d7dc103318caf589a#momentlayer#1
       triggers:
         - name: httpTrigger
           type: http
