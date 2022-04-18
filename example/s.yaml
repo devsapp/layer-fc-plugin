@@ -34,28 +34,33 @@ services:
       pre-deploy: # 在deploy之后运行
         - plugin: ${path(..)} 
           args:
-            name: osslayerlodash # 自定义名称
+            name: osslayerLodash # 自定义名称
             runtime:
               - nodejs12
-              - nodejs10
+              # - nodejs10
               - nodejs14
+              - custom
             ossBucket: cn-hangzhou-oss-lodash
             ossKey: lodashlayer.zip
+        # - plugin: ${path(..)} 
+        #   args:
+        #     codeUri: ./momentlayer
+        #     name: locallayerMoment # 自定义名称
+        #     runtime:
+        #       - nodejs12
+        #       - nodejs10
+        #       - nodejs14
+        #       - custom
         - plugin: ${path(..)} 
           args:
-            codeUri: ./momentlayer
-            name: locallayermoment # 自定义名称
-            runtime:
-              - nodejs12
-              - nodejs10
-              - nodejs14
+            customRuntime: nodejs16
     props:
       region: ${vars.region} # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
       service: ${vars.service}
       function:
         name: layer-fc-nodejs
         description: "hello world by serverless devs"
-        runtime: nodejs14
+        runtime: nodejs12
         codeUri: ./code
         handler: index.handler
         memorySize: 128
