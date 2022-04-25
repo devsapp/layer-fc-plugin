@@ -1,6 +1,7 @@
 const SYSTERMPATH = {
   PATH: ':/usr/local/bin/apache-maven/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ruby/bin',
   DEFAULT_EXAMPLE: {
+    layer: 'custom-default-code',
     code: 'default-web-code',
     customRuntimeConfig: {
       command: ['node'],
