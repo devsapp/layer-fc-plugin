@@ -19,38 +19,56 @@ name: hello-world-app
 # access 是当前应用所需要的密钥信息配置：
 # 密钥配置可以参考：https://www.serverless-devs.com/serverless-devs/command/config
 # 密钥使用顺序可以参考：https://www.serverless-devs.com/serverless-devs/tool#密钥使用顺序与规范
-access: sub
+access: wll
 
 vars: # 全局变量
   region: cn-hangzhou
   service:
-    name: hello-world-service
+    name: layer-world-service
     description: "hello world by serverless devs"
 
 services:
   helloworld: # 业务名称/模块名称
     component: fc
     actions:
-      post-deploy: # 在deploy之后运行
-        - plugin: ${path(..)}
+      pre-deploy: # 在deploy之后运行
+        - plugin: ${path(..)} 
           args:
-            codeUri: ./layer
-            name: egg-module # 自定义名称
-            update: true # 是否需要更新层，默认每次部署，不会重新更新层里面代码
+            name: osslayerLodash # 自定义名称
             runtime:
               - nodejs12
-              - nodejs10
+              # - nodejs10
+              - nodejs14
+              - custom
+            ossBucket: cn-hangzhou-oss-lodash
+            ossKey: lodashlayer.zip
+        # - plugin: ${path(..)} 
+        #   args:
+        #     codeUri: ./momentlayer
+        #     name: locallayerMoment # 自定义名称
+        #     runtime:
+        #       - nodejs12
+        #       - nodejs10
+        #       - nodejs14
+        #       - custom
+        - plugin: ${path(..)} 
+          args:
+            customRuntime: nodejs16
     props:
       region: ${vars.region} # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
       service: ${vars.service}
       function:
-        name: start-fc-http-nodejs14
+        name: layer-fc-nodejs
         description: "hello world by serverless devs"
-        runtime: nodejs14
+        runtime: nodejs12
         codeUri: ./code
         handler: index.handler
         memorySize: 128
         timeout: 60
+        environmentVariables:
+          NODE_PATH: 
+        # layers:
+          # - ddea885d86e0732d7dc103318caf589a#momentlayerTestNodemodules#8
       triggers:
         - name: httpTrigger
           type: http
