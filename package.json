@@ -7,7 +7,7 @@
   "author": "Serverless-Devs",
   "contributors": [],
   "license": "MIT",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -19,13 +19,13 @@
     "Function Compute"
   ],
   "scripts": {
-    "test": "jest"
-  },
-  "dependencies": {
-    "@serverless-devs/core": "^0.1.32"
+    "test": "jest",
+    "esbuild": "esbuild src/index.js --bundle --log-level=error --minify --platform=node --format=cjs --target=node10.4 --external:@serverless-devs/core --outfile=dist/index.js"
   },
   "devDependencies": {
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "@serverless-devs/core": "latest",
+    "esbuild": "^0.14.10"
   },
   "jest": {
     "collectCoverage": true
