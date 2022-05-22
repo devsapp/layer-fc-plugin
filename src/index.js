@@ -128,6 +128,5 @@ module.exports = async function index(inputs, args) {
     },
   });
 
-  console.log(JSON.stringify(_inputs, null, 2))
   return _inputs;
 };
