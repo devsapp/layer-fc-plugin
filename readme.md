@@ -198,7 +198,7 @@ $ s invoke
 ```
 
 查看Node版本
-![image](https://user-images.githubusercontent.com/5129967/169676222-9a70883c-bdc2-4759-92f1-f1a163ad0268.png)
+![](https://img.alicdn.com/imgextra/i1/O1CN01bG6apx28otMHfPf00_!!6000000007980-2-tps-1500-758.png)
 
 
 2. 通过插件修改Nodejs版本
@@ -222,7 +222,8 @@ $ s invoke
 ```
 
 查看Node版本，已经变成`16.x`版本了
-![](https://img.alicdn.com/imgextra/i1/O1CN01bG6apx28otMHfPf00_!!6000000007980-2-tps-1500-758.png)
+![image](https://user-images.githubusercontent.com/5129967/169676222-9a70883c-bdc2-4759-92f1-f1a163ad0268.png)
+
 
 
 
