@@ -16,6 +16,11 @@ module.exports = async function index(inputs, args) {
   logger.debug(`args params: ${JSON.stringify(args)}`);
   const { codeUri = null, description = null, customRuntime = null } = args;
   let { ossBucket = null, ossKey = null, name = null, runtime } = args;
+  const region = _.get(
+    inputs,
+    'props.region',
+    'cn-hangzhou'
+  );
 
   /**
    * customeRuntimeProps: { layer, customRuntimeConfig, path }
@@ -26,11 +31,7 @@ module.exports = async function index(inputs, args) {
   if (customRuntime) {
     if (LAYERS[customRuntime]) {
       customeRuntimeProps = LAYERS[customRuntime];
-      ossBucket = `fc-layers-${_.get(
-        inputs,
-        'props.region',
-        'cn-hangzhou'
-      )}`;
+      ossBucket = `fc-layers-${region}`;
       ossKey = `${_.get(customeRuntimeProps, 'layer')}.zip`;
       name = `${customRuntime}_fc_auto_created`;
       customRuntimeFunctionConfig = { runtime: 'custom' };
@@ -39,7 +40,7 @@ module.exports = async function index(inputs, args) {
       return inputs;
     }
   }
-  
+
   /**
    * handleInputs
    *  代码包上传
@@ -57,9 +58,6 @@ module.exports = async function index(inputs, args) {
       function: customRuntimeFunctionConfig,
     },
   });
-
-  // console.log(_inputs)
-  // return;
 
   /**
    * output
@@ -96,13 +94,17 @@ module.exports = async function index(inputs, args) {
   }
   const layer = await loadComponent('devsapp/fc-layer');
   let publishRes;
-  const layerList = await layer.list(_inputs);
-  if(args.forceUpdate || _.isEmpty(layerList)
-  || _.size(_.filter(layerList, item => item.layerName === args.name)) === 0
+  const layerList = await layer.list({
+    args: `--region ${inputs.props.region} --prefix ${args.name}`,
+    credentials: inputs.credentials,
+    project: inputs.project,
+  });
+  if (args.forceUpdate || _.isEmpty(layerList)
+    || _.size(_.filter(layerList, item => item.layerName === args.name)) === 0
   ) {
     publishRes = await layer.publish(_inputs);
   } else {
-    publishRes = _.get(_.maxBy(layerList, item => item.version), 'arn')
+    publishRes = _.get(layerList, '[0].arn')
   }
 
   // layer注册顺序
@@ -113,7 +115,7 @@ module.exports = async function index(inputs, args) {
     layersFcInputsUni = layers;
   }
   const layerPlugins = _.dropRight(layers, layersFcInputsUni.length);
-  if(publishRes) {
+  if (publishRes) {
     layerPlugins.push(publishRes);
     layers = _.concat(layerPlugins, layersFcInputsUni);
   }
