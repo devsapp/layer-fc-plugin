@@ -40,7 +40,7 @@ actions: # 自定义执行逻辑
 | ------------- | ------------ | ------------------------------------- |
 | customRuntime | string       | 自定义环境,只作用于custom runtime     |
 | name          | string       | 层的名称(作为唯一标识)                |
-| codeUri       | string       | layer本地的路径地址                   |
+| codeUri       | string       | layer 本地的路径地址，或者远端目录（支持 http 和 https 协议）                   |
 | ossBucket     | string       | oss Bukect 名                         |
 | ossKey        | string       | ossKey(必须压缩包文件，比如layer.zip) |
 | runtime       | list[string] | 作用的runtime                         |
