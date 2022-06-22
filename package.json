@@ -24,11 +24,15 @@
     "esbuild": "esbuild src/index.js --bundle --log-level=error --minify --platform=node --format=cjs --target=node10.4 --external:@serverless-devs/core --outfile=dist/index.js"
   },
   "devDependencies": {
-    "jest": "^27.5.1",
     "@serverless-devs/core": "latest",
-    "esbuild": "^0.14.10"
+    "@types/jest": "^28.1.3",
+    "esbuild": "^0.14.10",
+    "jest": "^27.5.1"
   },
   "jest": {
-    "collectCoverage": true
+    "collectCoverage": true,
+    "setupFiles": [
+      "./jest.setup.js"
+    ]
   }
 }
