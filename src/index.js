@@ -23,16 +23,16 @@ module.exports = async function index(inputs, args) {
   );
 
   /**
-   * customeRuntimeProps: { layer, customRuntimeConfig, path }
-   * customRuntimeFunctionConfig: { runtime: 'custom',   customRuntimeConfig: extend(customeRuntimeProps.customRuntimeConfig) }
+   * customRuntimeProps: { layer, customRuntimeConfig, path }
+   * customRuntimeFunctionConfig: { runtime: 'custom',   customRuntimeConfig: extend(customRuntimeProps.customRuntimeConfig) }
    * **/
-  let customeRuntimeProps = {};
+  let customRuntimeProps = {};
   let customRuntimeFunctionConfig = {};
   if (customRuntime) {
     if (LAYERS[customRuntime]) {
-      customeRuntimeProps = LAYERS[customRuntime];
+      customRuntimeProps = LAYERS[customRuntime];
       ossBucket = `fc-layers-${region}`;
-      ossKey = `${_.get(customeRuntimeProps, 'layer')}.zip`;
+      ossKey = `${_.get(customRuntimeProps, 'layer')}.zip`;
       name = `${customRuntime}_fc_auto_created`;
       customRuntimeFunctionConfig = { runtime: 'custom' };
       runtime = ['custom'];
@@ -74,9 +74,9 @@ module.exports = async function index(inputs, args) {
   );
 
   // 避免重复注册PATH  自定义运行环境
-  if (!_.isEmpty(customeRuntimeProps)) {
+  if (!_.isEmpty(customRuntimeProps)) {
     const envPATH = environmentVariables.PATH || '';
-    const envDefaultPATH = `${customeRuntimeProps.path}${PATH}`;
+    const envDefaultPATH = `${customRuntimeProps.path}${PATH}`;
     if (!_.includes(envPATH, envDefaultPATH)) {
       environmentVariables.PATH = envPATH
         ? `${envDefaultPATH}:${envPATH}`
