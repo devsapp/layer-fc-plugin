@@ -84,7 +84,7 @@ actions: # 自定义执行逻辑
 
 5. dotnet
 
-- dotnet
+- dotnet6
 - dotnet2.1 (默认)
 
 ## 最佳实践
