@@ -82,6 +82,11 @@ actions: # 自定义执行逻辑
 - php7.2
 - php5.6
 
+5. dotnet
+
+- dotnet
+- dotnet2.1 (默认)
+
 ## 最佳实践
 
 ### 公共依赖包
