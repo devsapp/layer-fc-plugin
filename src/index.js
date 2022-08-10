@@ -95,12 +95,12 @@ module.exports = async function index(inputs, args) {
   const layer = await loadComponent('devsapp/fc-layer');
   let publishRes;
   const layerList = await layer.list({
-    args: `--region ${inputs.props.region} --prefix ${args.name}`,
+    args: `--region ${inputs.props.region} --prefix ${name}`,
     credentials: inputs.credentials,
     project: inputs.project,
   });
   if (args.forceUpdate || _.isEmpty(layerList)
-    || _.size(_.filter(layerList, item => item.layerName === args.name)) === 0
+    || _.size(_.filter(layerList, item => item.layerName === name)) === 0
   ) {
     publishRes = await layer.publish(_inputs);
   } else {
